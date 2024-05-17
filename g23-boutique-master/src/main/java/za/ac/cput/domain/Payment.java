@@ -69,7 +69,7 @@ public class Payment {
         }
 
         public Builder setAmount(long amount) {
-            this.amount = amount;
+            this.amount = (double) amount;
             return this;
         }
 
