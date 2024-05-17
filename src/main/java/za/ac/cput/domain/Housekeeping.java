@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,8 +15,8 @@ public class Housekeeping {
     private String taskType;
     private String staffAssigned;
     private String taskStatus;
-    private Date timeStarted;
-    private Date timeCompleted;
+    private LocalTime timeStarted;
+    private LocalTime timeCompleted;
     private String roomCondition;
 
 
@@ -54,11 +55,11 @@ public Long getTaskId() {
         return taskStatus;
     }
 
-    public Date getTimeStarted() {
+    public LocalTime getTimeStarted() {
         return timeStarted;
     }
 
-    public Date getTimeCompleted() {
+    public LocalTime getTimeCompleted() {
         return timeCompleted;
     }
 
@@ -99,8 +100,8 @@ public Long getTaskId() {
         private String taskType;
         private String staffAssigned;
         private String taskStatus;
-        private Date timeStarted;
-        private Date timeCompleted;
+        private LocalTime timeStarted;
+        private LocalTime timeCompleted;
         private String roomCondition;
 
         public Builder setTaskId(Long taskId) {
@@ -128,12 +129,12 @@ public Long getTaskId() {
             return this;
         }
 
-        public Builder setTimeStarted(Date timeStarted) {
+        public Builder setTimeStarted(LocalTime timeStarted) {
             this.timeStarted = timeStarted;
             return this;
         }
 
-        public Builder setTimeCompleted(Date timeCompleted) {
+        public Builder setTimeCompleted(LocalTime timeCompleted) {
             this.timeCompleted = timeCompleted;
             return this;
         }
