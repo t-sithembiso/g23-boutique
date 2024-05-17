@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 public class Report {
     @Id
-    private int reportId;
+    private long reportId;
     private String reportType;
     private LocalDate dateGenerated;
     private String content;
@@ -25,7 +25,7 @@ public class Report {
 
     }
 
-    public int getReportId() {
+    public long getReportId() {
         return reportId;
     }
 
@@ -64,12 +64,12 @@ public class Report {
     }
 
     public static class Builder{
-            private int reportId;
+            private long reportId;
             private String reportType;
             private LocalDate dateGenerated;
             private String content;
 
-        public Builder setReportId(int reportId) {
+        public Builder setReportId(long reportId) {
             this.reportId = reportId;
             return this;
         }

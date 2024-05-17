@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class ReportFactory {
-    public static Report buildReport(int reportId, String reportType, LocalDate date, String content ){
+    public static Report buildReport(long reportId, String reportType, LocalDate date, String content ){
         if(reportId < 0
             || Helper.isNullorEmpty(reportType)
             || date == null
