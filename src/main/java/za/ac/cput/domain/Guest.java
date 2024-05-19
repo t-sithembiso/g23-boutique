@@ -1,8 +1,11 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
+import java.util.List;
 import java.util.Objects;
 @Entity
 public class Guest {
@@ -11,6 +14,9 @@ public class Guest {
     private String guestFullName;
     private String guestEmail;
     private String guestMobile;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private List<Booking> employees;
 
     protected Guest(){
 
