@@ -1,7 +1,13 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 public class Booking {
     private Long bookingId;
@@ -9,6 +15,9 @@ public class Booking {
     private Date checkOut;
 
     private double totalPrice;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private Set<Payment> payments;
+
 
     protected Booking(){
 
