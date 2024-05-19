@@ -6,7 +6,7 @@ public interface IService <T,ID>{
 
     T  create(T t);
     T update(T t);
-    ID read(ID id);
+    T read(ID id);
 
 
 }

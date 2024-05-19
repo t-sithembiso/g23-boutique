@@ -6,7 +6,7 @@ import za.ac.cput.domain.Manager;
 
 
 @Repository
-public interface ManagerRepository extends JpaRepository<Manager, Integer> {
+public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
 }
 

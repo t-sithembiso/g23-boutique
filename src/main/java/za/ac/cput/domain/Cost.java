@@ -1,10 +1,13 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.Date;
 import java.util.Objects;
-
+@Entity
 public class Cost {
-
+    @Id
     private String costId;
     private String inventoryId;
     private String costDescription;

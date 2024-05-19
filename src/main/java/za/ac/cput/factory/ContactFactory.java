@@ -10,7 +10,6 @@ public class ContactFactory {
         return new Contact.Builder()
                 .setMobile(mobile)
                 .setEmail(email)
-                .setStaff(staff)
                 .build();
     }
 }

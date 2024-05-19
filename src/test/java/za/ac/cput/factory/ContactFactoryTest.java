@@ -40,11 +40,9 @@ class ContactFactoryTest {
         // Verify that the Contact properties are set correctly
         assertEquals(mobile, contact.getMobile());
         assertEquals(email, contact.getEmail());
-        assertEquals(testStaff, contact.getStaff());
 
         // Print assertion results
         System.out.println("Contact Mobile: " + contact.getMobile());
         System.out.println("Contact Email: " + contact.getEmail());
-        System.out.println("Contact Staff: " + contact.getStaff());
     }
 }

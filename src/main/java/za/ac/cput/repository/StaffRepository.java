@@ -6,6 +6,6 @@ import za.ac.cput.domain.Staff;
 
 
 @Repository
-public interface StaffRepository extends JpaRepository<Staff, Integer> {
+public interface StaffRepository extends JpaRepository<Staff, Long> {
 
 }
