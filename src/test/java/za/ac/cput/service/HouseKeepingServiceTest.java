@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.class)
 class HouseKeepingServiceTest {
-    @Autowired
-    private  HouseKeepingService houseKeepingServiceObj;
-    private static Housekeeping hs1,hs2;
+@Autowired
+private  HouseKeepingService houseKeepingServiceObj;
+private static Housekeeping hs1,hs2;
 
     @Test
     void e_getall() {
@@ -28,8 +28,8 @@ class HouseKeepingServiceTest {
     void a_setup(){
         LocalTime timeStarted = LocalTime.of(8, 30);
         LocalTime timeCompleted=LocalTime.of(9, 0);
-        hs1 = HouseKeepingFactory.buildHouseKeeping(111L,101,"change sheets", "have to change to staffID",
-                "completed",timeStarted,timeCompleted,"Ready for use");
+      hs1 = HouseKeepingFactory.buildHouseKeeping(111L,101,"change sheets", "have to change to staffID",
+              "completed",timeStarted,timeCompleted,"Ready for use");
         assertNotNull(hs1);
         System.out.println(hs1.toString());
 
