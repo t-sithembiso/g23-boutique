@@ -49,14 +49,11 @@ public class Inventory {
 
         return inventoryId == inventory.inventoryId && quantity == inventory.quantity &&
                 Objects.equals(itemTypes, inventory.itemTypes);
-
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(inventoryId, quantity, itemTypes);
-
     }
 
     @Override
@@ -64,7 +61,6 @@ public class Inventory {
         return "Inventory{" +
                 "inventoryId=" + inventoryId +
                 ", quantity=" + quantity +
-
                 ", itemTypes=" + itemTypes +
                 '}';
     }
@@ -73,7 +69,6 @@ public class Inventory {
         private long inventoryId;
         private int quantity;
         private List<ItemType> itemTypes;
-
 
         public Builder setInventoryId(long inventoryId) {
             this.inventoryId = inventoryId;
@@ -84,7 +79,6 @@ public class Inventory {
             this.quantity = quantity;
             return this;
         }
-
 
         public Builder setItemTypes(List<ItemType> itemTypes) {
             this.itemTypes = itemTypes;

@@ -10,7 +10,6 @@ public class ItemType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long itemTypeId;
 
-
     @Column(nullable = false)
     private String itemName;
 
@@ -39,7 +38,6 @@ public class ItemType {
     }
 
     public String getItemName() {
-
         return itemName;
     }
 
@@ -57,12 +55,6 @@ public class ItemType {
         return supplierName;
     }
 
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,12 +65,10 @@ public class ItemType {
                 Objects.equals(itemName, itemType.itemName) &&
                 Objects.equals(category, itemType.category) &&
                 Objects.equals(supplierName, itemType.supplierName);
-
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(itemTypeId, itemName, category, cost, supplierName);
 
     }
@@ -86,18 +76,13 @@ public class ItemType {
     @Override
     public String toString() {
         return "ItemType{" +
-
                 "itemTypeId='" + itemTypeId + '\'' +
-
                 ", itemName='" + itemName + '\'' +
                 ", category='" + category + '\'' +
                 ", cost=" + cost +
                 ", supplierName='" + supplierName + '\'' +
                 '}';
     }
-
-
-    public static class Builder {
 
     public static class Builder{
 
