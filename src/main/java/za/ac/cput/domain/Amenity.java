@@ -2,6 +2,8 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 import java.util.Objects;
@@ -18,6 +20,9 @@ public class Amenity {
     private String costDescription;
     private Double amount;
     private Date dateIncurred;
+    @ManyToOne
+    @JoinColumn(name = "booked")
+    private Booking booking;
 
     public Amenity() {
 
@@ -45,17 +50,20 @@ public class Amenity {
         return available;
     }
 
+    public Booking getBooking() {
+        return booking;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Amenity amenity = (Amenity) o;
-        return available == amenity.available && Objects.equals(amenityId, amenity.amenityId) && Objects.equals(amenityName, amenity.amenityName) && Objects.equals(amenityDescription, amenity.amenityDescription) && Objects.equals(costId, amenity.costId) && Objects.equals(inventoryId, amenity.inventoryId) && Objects.equals(costDescription, amenity.costDescription) && Objects.equals(amount, amenity.amount) && Objects.equals(dateIncurred, amenity.dateIncurred);
+        if (!(o instanceof Amenity amenity)) return false;
+        return isAvailable() == amenity.isAvailable() && Objects.equals(getAmenityId(), amenity.getAmenityId()) && Objects.equals(getAmenityName(), amenity.getAmenityName()) && Objects.equals(getAmenityDescription(), amenity.getAmenityDescription()) && Objects.equals(getBooking(), amenity.getBooking());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amenityId, amenityName, amenityDescription, available, costId, inventoryId, costDescription, amount, dateIncurred);
+        return Objects.hash(getAmenityId(), getAmenityName(), getAmenityDescription(), isAvailable(), getBooking());
     }
 
     @Override
@@ -65,11 +73,7 @@ public class Amenity {
                 ", amenityName='" + amenityName + '\'' +
                 ", amenityDescription='" + amenityDescription + '\'' +
                 ", available=" + available +
-                ", costId='" + costId + '\'' +
-                ", inventoryId='" + inventoryId + '\'' +
-                ", costDescription='" + costDescription + '\'' +
-                ", amount=" + amount +
-                ", dateIncurred=" + dateIncurred +
+                ", booking=" + booking +
                 '}';
     }
 
@@ -78,6 +82,7 @@ public class Amenity {
         private String amenityName;
         private String amenityDescription;
         private boolean available;
+        private Booking booking;
 
 
 
@@ -99,6 +104,11 @@ public class Amenity {
 
         public Builder setAvailable(boolean available) {
             this.available = available;
+            return this;
+        }
+
+        public Builder setBooking(Booking booking) {
+            this.booking = booking;
             return this;
         }
 
