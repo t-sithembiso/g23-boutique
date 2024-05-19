@@ -8,4 +8,5 @@ import za.ac.cput.domain.Room;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Amenity> {
 
+    ScopedValue<Object> findById(Long roomTypeId);
 }
