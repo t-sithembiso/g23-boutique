@@ -4,24 +4,28 @@ import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
+
 @Entity
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long inventoryId;
+
+    @Column(nullable = false)
     private int quantity;
 
-    @OneToMany(mappedBy = "itemType", cascade = CascadeType.ALL)
-    private List<ItemType> itemType;
+    @OneToMany
+    private List<ItemType> itemTypes;
 
-    protected Inventory() {
-    }
+    protected Inventory() {}
 
-    public Inventory(Builder builder){
+    private Inventory(Builder builder) {
         this.inventoryId = builder.inventoryId;
         this.quantity = builder.quantity;
-        this.itemType = builder.itemType;
+        this.itemTypes = builder.itemTypes;
     }
+
+
     public long getInventoryId() {
         return inventoryId;
     }
@@ -31,8 +35,10 @@ public class Inventory {
         return quantity;
     }
 
-    public List<ItemType> getItemType() {
-        return itemType;
+
+    public List<ItemType> getItemTypes() {
+        return itemTypes;
+
     }
 
     @Override
@@ -40,12 +46,17 @@ public class Inventory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Inventory inventory = (Inventory) o;
-        return inventoryId == inventory.inventoryId && quantity == inventory.quantity && Objects.equals(itemType, inventory.itemType);
+
+        return inventoryId == inventory.inventoryId && quantity == inventory.quantity &&
+                Objects.equals(itemTypes, inventory.itemTypes);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, quantity, itemType);
+
+        return Objects.hash(inventoryId, quantity, itemTypes);
+
     }
 
     @Override
@@ -53,14 +64,16 @@ public class Inventory {
         return "Inventory{" +
                 "inventoryId=" + inventoryId +
                 ", quantity=" + quantity +
-                ", itemType=" + itemType +
+
+                ", itemTypes=" + itemTypes +
                 '}';
     }
 
-    public static class Builder{
+    public static class Builder {
         private long inventoryId;
         private int quantity;
-        private List<ItemType> itemType;
+        private List<ItemType> itemTypes;
+
 
         public Builder setInventoryId(long inventoryId) {
             this.inventoryId = inventoryId;
@@ -72,17 +85,22 @@ public class Inventory {
             return this;
         }
 
-        public Builder setItemType(List<ItemType> itemType) {
-            this.itemType = itemType;
+
+        public Builder setItemTypes(List<ItemType> itemTypes) {
+            this.itemTypes = itemTypes;
             return this;
         }
 
-        public Builder copy(Inventory inventory){
-            this.inventoryId =inventory.inventoryId;
-            this.quantity=inventory.quantity;
-            this.itemType=inventory.itemType;
+        public Builder copy(Inventory inventory) {
+            this.inventoryId = inventory.inventoryId;
+            this.quantity = inventory.quantity;
+            this.itemTypes = inventory.itemTypes;
             return this;
         }
-        public Inventory build(){return new Inventory(this);}
+
+        public Inventory build() {
+            return new Inventory(this);
+        }
+
     }
 }

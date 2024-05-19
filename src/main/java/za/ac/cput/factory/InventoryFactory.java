@@ -7,12 +7,19 @@ import za.ac.cput.util.Helper;
 import java.util.List;
 
 public class InventoryFactory {
-    public static Inventory buildInventory(int inventoryId, int quantity, List<ItemType> itemType){
-        if(Helper.isNullorEmpty(String.valueOf(inventoryId)) || Helper.isNullorEmpty(itemType.toString()) ||
-                Helper.isNullorEmpty(String.valueOf(quantity)))
+
+    public static Inventory buildInventory(Long inventoryId, int quantity, List<ItemType> itemTypes) {
+        if (Helper.isNullorEmpty(String.valueOf(inventoryId)) || Helper.isNullorEmpty(String.valueOf(quantity)) ||
+                itemTypes == null || itemTypes.isEmpty())
             return null;
 
-        return new Inventory.Builder().setInventoryId(inventoryId).setQuantity(quantity).setItemType(itemType)
+        return new Inventory.Builder()
+                .setInventoryId(inventoryId)
+                .setQuantity(quantity)
+                .setItemTypes(itemTypes)
                 .build();
     }
 }
+
+
+ 
