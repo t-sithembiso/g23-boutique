@@ -11,9 +11,8 @@ public class InventoryService implements IInventoryService{
 
     private InventoryRepository inventoryRepository;
     @Autowired
-    protected InventoryService(InventoryRepository inventoryRepository){
-
-        this.inventoryRepository=inventoryRepository;
+    protected InventoryService(InventoryRepository invent){
+        this.inventoryRepository=invent;
     }
     @Override
     public List<Inventory> getall() {
@@ -21,9 +20,7 @@ public class InventoryService implements IInventoryService{
     }
 
     @Override
-    public Inventory create(Inventory inventory) {
-        return inventoryRepository.save(inventory);
-    }
+    public Inventory create(Inventory inventory) {return inventoryRepository.save(inventory);}
 
     @Override
     public Inventory update(Inventory inventory) {

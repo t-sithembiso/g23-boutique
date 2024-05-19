@@ -8,8 +8,8 @@ import java.util.List;
 public class ItemTypeService implements IItemTypeService{
     private ItemTypeRepository itemTypeRepository;
 
-    protected ItemTypeService(ItemTypeRepository itemTypeRepository){
-        this.itemTypeRepository = itemTypeRepository;
+    protected ItemTypeService(ItemTypeRepository itemType){
+        this.itemTypeRepository = itemType;
     }
 
     @Override
