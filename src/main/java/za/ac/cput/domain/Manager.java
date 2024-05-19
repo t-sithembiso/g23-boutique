@@ -1,17 +1,19 @@
 //https://github.com/sitgi/g23-boutique
 package za.ac.cput.domain;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.Set;
-
+@Entity
 public class Manager {
     @Id
     private long managerId;
     private String username;
     private String password;
-    private Set<Staff> staff;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name ="appointedmanager")
+    private Staff staff;
 
     public Manager() {
     }
@@ -35,21 +37,20 @@ public class Manager {
         return password;
     }
 
-    public Set<Staff> getStaff() {
+    public Staff getStaff() {
         return staff;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Manager manager = (Manager) o;
-        return managerId == manager.managerId && Objects.equals(username, manager.username) && Objects.equals(password, manager.password) && Objects.equals(staff, manager.staff);
+        if (!(o instanceof Manager manager)) return false;
+        return getManagerId() == manager.getManagerId() && Objects.equals(getUsername(), manager.getUsername()) && Objects.equals(getPassword(), manager.getPassword()) && Objects.equals(getStaff(), manager.getStaff());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(managerId, username, password, staff);
+        return Objects.hash(getManagerId(), getUsername(), getPassword(), getStaff());
     }
 
     @Override
@@ -61,11 +62,12 @@ public class Manager {
                 ", staff=" + staff +
                 '}';
     }
+
     public static class Builder{
         private int managerId;
         private String username;
         private String password;
-        private Set<Staff> staff;
+        private Staff staff;
 
         public Builder setManagerId(int managerId) {
             this.managerId = managerId;
@@ -82,7 +84,7 @@ public class Manager {
             return this;
         }
 
-        public Builder setStaff(Set<Staff> staff) {
+        public Builder setStaff(Staff staff) {
             this.staff = staff;
             return this;
         }

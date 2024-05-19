@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class ReceptionistFactory {
 
-    public static Receptionist createReceptionist(int receptionist_id, String username, String password, Set<Staff> staff) {
+    public static Receptionist createReceptionist(int receptionist_id, String username, String password, Staff staff) {
         return new Receptionist.Builder()
                 .setReceptionist_id(receptionist_id)
                 .setUsername(username)

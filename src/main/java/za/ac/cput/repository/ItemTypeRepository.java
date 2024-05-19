@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.ItemType;
 @Repository
 public interface ItemTypeRepository extends JpaRepository<ItemType, Long> {
-    ItemType findEmployeeBaseByEmployeeId(Long employeeId);
+
 }

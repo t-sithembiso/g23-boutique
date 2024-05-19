@@ -12,7 +12,7 @@ import za.ac.cput.factory.SupplierFactory;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 
-@TestMethodOrder(MethodOrderer.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SupplierServiceTest {
     @Autowired
 
@@ -56,7 +56,7 @@ private static Supplier supplier1;
 
     }
 
-    @Test  @Order(3)
+    @Test  @Order(4)
     void read() {
 
         Supplier read=supplierService.read(supplier1.getSupplierId());
@@ -66,7 +66,7 @@ private static Supplier supplier1;
 
     }
 
-    @Test  @Order(4)
+    @Test  @Order(5)
     void getall() {
 
 System.out.println(supplierService.getall());

@@ -6,7 +6,7 @@ import za.ac.cput.domain.Amenity;
 import za.ac.cput.domain.Room;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Amenity> {
+public interface RoomRepository extends JpaRepository<Room, Long> {
 
     ScopedValue<Object> findById(Long roomTypeId);
 }

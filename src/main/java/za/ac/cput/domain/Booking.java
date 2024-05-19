@@ -16,7 +16,7 @@ public class Booking {
 
     private double totalPrice;
     @ManyToOne
-    @JoinColumn(name = "booked")
+    @JoinTable(name = "guest_id")
     private Guest guest;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)

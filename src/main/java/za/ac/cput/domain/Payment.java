@@ -14,7 +14,7 @@ public class Payment {
     private LocalDate paymentDate;
 
     @ManyToOne
-    @JoinColumn(name = "bookingId")
+    @JoinTable(name = "booking_id")
     private Booking booking;
 
     protected Payment(){

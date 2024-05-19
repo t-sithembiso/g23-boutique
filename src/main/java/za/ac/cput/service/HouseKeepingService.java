@@ -11,7 +11,7 @@ import java.util.List;
 public class HouseKeepingService implements IHouseKeepingService{
 
 
-    private final HouseKeepingRepository houseKeepingRepositoryObj;
+    private HouseKeepingRepository houseKeepingRepositoryObj;
     @Autowired
     protected HouseKeepingService(HouseKeepingRepository houseKeepingRepositoryObj){
         this.houseKeepingRepositoryObj=houseKeepingRepositoryObj;

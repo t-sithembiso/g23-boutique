@@ -10,17 +10,12 @@ public class ItemType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long itemTypeId;
 
-
-    @Column(nullable = false)
     private String itemName;
 
-    @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
     private int cost;
 
-    @Column(nullable = false)
     private String supplierName;
 
     protected ItemType() {}
@@ -57,12 +52,6 @@ public class ItemType {
         return supplierName;
     }
 
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,8 +87,6 @@ public class ItemType {
 
 
     public static class Builder {
-
-    public static class Builder{
 
         private long itemTypeId;
         private String itemName;
