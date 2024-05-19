@@ -1,5 +1,6 @@
 package za.ac.cput.service;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -12,20 +13,20 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.class)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 class HouseKeepingServiceTest {
 @Autowired
 private  HouseKeepingService houseKeepingServiceObj;
 private static Housekeeping hs1,hs2;
 
     @Test
-    void e_getall() {
-        System.out.println(houseKeepingServiceObj.getall());
+    void d_getAll() {
+        System.out.println(houseKeepingServiceObj.getAll());
 
     }
 
-    @Test
-    void a_setup(){
+@BeforeAll
+    static void setup(){
         LocalTime timeStarted = LocalTime.of(8, 30);
         LocalTime timeCompleted=LocalTime.of(9, 0);
       hs1 = HouseKeepingFactory.buildHouseKeeping(111L,101,"change sheets", "have to change to staffID",
@@ -44,7 +45,7 @@ private static Housekeeping hs1,hs2;
 
 
     @Test
-    void b_create() {
+    void a_create() {
 
         Housekeeping hsCreated= houseKeepingServiceObj.create(hs1);
         assertNotNull(hsCreated);
@@ -56,7 +57,7 @@ private static Housekeeping hs1,hs2;
     }
 
     @Test
-    void update() {
+    void c_update() {
         Housekeeping newHouseKeeping= new Housekeeping.Builder().copy(hs2).setTaskStatus("In progress")
                 .build();
         Housekeeping updated= houseKeepingServiceObj.update(newHouseKeeping);
@@ -65,12 +66,12 @@ private static Housekeeping hs1,hs2;
     }
 
     @Test
-    void read() {
-        Housekeeping read=houseKeepingServiceObj.read(hs1.getTaskId());
+    void b_read() {
+        Long read=houseKeepingServiceObj.read(hs1.getTaskId());
         assertNotNull(read);
         System.out.println(read);
 
-        Housekeeping read2=houseKeepingServiceObj.read(hs2.getTaskId());
+        Long read2=houseKeepingServiceObj.read(hs2.getTaskId());
         assertNotNull(read2);
         System.out.println(read2);
 
