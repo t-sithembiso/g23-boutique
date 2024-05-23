@@ -10,6 +10,11 @@ public class Helper {
             return true;
         return false;
     }
+
+    public static boolean isNull(Boolean b) {
+        return b == null;
+    }
+
     public static String generateId(){
         return UUID.randomUUID().toString();
     }

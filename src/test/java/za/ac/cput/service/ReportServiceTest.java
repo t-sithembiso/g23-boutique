@@ -28,8 +28,7 @@ class ReportServiceTest {
         assertNotNull(rep2);
         System.out.println(rep2);
     }
-    //assertNotNull();
-    //        System.out.println();
+
     @Test
     void a_create() {
         Report reportCreated1 = reportService.create(rep1);
@@ -46,6 +45,10 @@ class ReportServiceTest {
         Report repUpdated = reportService.update(reportUpdate);
         assertNotNull(repUpdated);
         System.out.println(repUpdated);
+        Report upDate = new Report.Builder().copy(rep2).setDateGenerated(LocalDate.now()).build();
+        Report newDate = reportService.update(upDate);
+        assertNotNull(newDate);
+        System.out.println(newDate);
     }
 
     @Test

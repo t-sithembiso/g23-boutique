@@ -3,23 +3,19 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-    @Entity
+@Entity
     public class Amenity {
         @Id
-        private String amenityId;
+        private long amenityId;
         private String amenityName;
         private String amenityDescription;
         private boolean available;
-        private String costId;
-        private String inventoryId;
-        private String costDescription;
-        private Double amount;
-        private Date dateIncurred;
-        @ManyToOne
-        @JoinColumn(name = "booking_id")
-        private Booking booking;
+        @ManyToMany(mappedBy = "amenities", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+        Set<Booking> bookings = new HashSet<>();
 
     public Amenity() {
 
@@ -30,10 +26,9 @@ import java.util.Objects;
         this.amenityName = builder.amenityName;
         this.amenityDescription = builder.amenityDescription;
         this.available = builder.available;
-
     }
 
-    public String getAmenityId() {
+    public long getAmenityId() {
         return amenityId;
     }
 
@@ -47,44 +42,36 @@ import java.util.Objects;
         return available;
     }
 
-    public Booking getBooking() {
-        return booking;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Amenity amenity)) return false;
-        return isAvailable() == amenity.isAvailable() && Objects.equals(getAmenityId(), amenity.getAmenityId()) && Objects.equals(getAmenityName(), amenity.getAmenityName()) && Objects.equals(getAmenityDescription(), amenity.getAmenityDescription()) && Objects.equals(getBooking(), amenity.getBooking());
+        return getAmenityId() == amenity.getAmenityId() && isAvailable() == amenity.isAvailable() && Objects.equals(getAmenityName(), amenity.getAmenityName()) && Objects.equals(getAmenityDescription(), amenity.getAmenityDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAmenityId(), getAmenityName(), getAmenityDescription(), isAvailable(), getBooking());
+        return Objects.hash(getAmenityId(), getAmenityName(), getAmenityDescription(), isAvailable());
     }
 
     @Override
     public String toString() {
         return "Amenity{" +
-                "amenityId='" + amenityId + '\'' +
+                "amenityId=" + amenityId +
                 ", amenityName='" + amenityName + '\'' +
                 ", amenityDescription='" + amenityDescription + '\'' +
                 ", available=" + available +
-                ", booking=" + booking +
                 '}';
     }
 
     public static class Builder {
-        private String amenityId;
+        private long amenityId;
         private String amenityName;
         private String amenityDescription;
         private boolean available;
-        private Booking booking;
 
-
-
-
-        public Builder setAmenityId(String amenityId) {
+        public Builder setAmenityId(long amenityId) {
             this.amenityId = amenityId;
             return this;
         }
@@ -104,10 +91,6 @@ import java.util.Objects;
             return this;
         }
 
-        public Builder setBooking(Booking booking) {
-            this.booking = booking;
-            return this;
-        }
 
         public Builder copy(Amenity amenity) {
             this.amenityId = amenity.amenityId;
