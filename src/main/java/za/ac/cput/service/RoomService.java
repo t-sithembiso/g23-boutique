@@ -8,7 +8,7 @@ import za.ac.cput.repository.RoomRepository;
 import java.util.List;
 
 @Service
-public final class RoomService implements IRoomService {
+public class RoomService implements IRoomService {
 
     private final RoomRepository repository;
 
@@ -16,19 +16,21 @@ public final class RoomService implements IRoomService {
     public RoomService(RoomRepository repository) {
         this.repository = repository;
     }
-
+    @Override
     public Room create(Room room) {
         return repository.save(room);
     }
-
+    @Override
     public Room read(Long roomTypeId) {
-        return (Room) repository.findById(roomTypeId).orElse(null);
+        return repository.findById(roomTypeId).orElse(null);
     }
+    @Override
     public Room update(Room room) {
         return repository.save(room);
     }
-    //try
-    public List<Room> getAll() {
+
+    @Override
+    public List<Room> getall() {
         return repository.findAll();
     }
 }

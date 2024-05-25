@@ -2,26 +2,33 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Booking {
+public class Booking{
     @Id
-    private Long bookingId;
+    private long bookingId;
     private LocalDate checkIn;
     private LocalDate checkOut;
 
     private double totalPrice;
     @ManyToOne
-    @JoinTable(name = "guest_id")
+    @JoinColumn(name = "guest_id")
     private Guest guest;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private List<Amenity> amenities;
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "guest_booking_amenity",
+            joinColumns = @JoinColumn(name = "booking_id"),
+            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
+    private Set<Amenity> amenities;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Payment> payments;
 
 
@@ -37,7 +44,6 @@ public class Booking {
         this.totalPrice = builder.totalPrice;
         this.guest = builder.guest;
         this.amenities = builder.amenities;
-        this.payments = builder.payments;
 
     }
 
@@ -60,23 +66,21 @@ public class Booking {
         return guest;
     }
 
-    public List<Amenity> getAmenities() {
+    public Set<Amenity> getAmenities() {
         return amenities;
     }
-    public List<Payment> getPayments() {
-        return payments;
-    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Booking booking)) return false;
-        return Double.compare(getTotalPrice(), booking.getTotalPrice()) == 0 && Objects.equals(getBookingId(), booking.getBookingId()) && Objects.equals(getCheckIn(), booking.getCheckIn()) && Objects.equals(getCheckOut(), booking.getCheckOut()) && Objects.equals(getGuest(), booking.getGuest()) && Objects.equals(getAmenities(), booking.getAmenities()) && Objects.equals(getPayments(), booking.getPayments());
+        return getBookingId() == booking.getBookingId() && Double.compare(getTotalPrice(), booking.getTotalPrice()) == 0 && Objects.equals(getCheckIn(), booking.getCheckIn()) && Objects.equals(getCheckOut(), booking.getCheckOut()) && Objects.equals(getGuest(), booking.getGuest()) && Objects.equals(getAmenities(), booking.getAmenities());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBookingId(), getCheckIn(), getCheckOut(), getTotalPrice(), getGuest(), getAmenities(), getPayments());
+        return Objects.hash(getBookingId(), getCheckIn(), getCheckOut(), getTotalPrice(), getGuest(), getAmenities());
     }
 
     @Override
@@ -88,18 +92,16 @@ public class Booking {
                 ", totalPrice=" + totalPrice +
                 ", guest=" + guest +
                 ", amenities=" + amenities +
-                ", payments=" + payments +
                 '}';
     }
 
     public static class Builder{
-        private Long bookingId;
+        private long bookingId;
         private LocalDate checkIn;
         private LocalDate checkOut;
         private double totalPrice;
         private Guest guest;
-        private List<Amenity> amenities;
-        private List<Payment> payments;
+        private Set<Amenity> amenities;
 
         public Builder setBookingId(Long bookingId) {
             this.bookingId = bookingId;
@@ -125,12 +127,8 @@ public class Booking {
             return this;
         }
 
-        public Builder setAmenities(List<Amenity> amenities) {
+        public Builder setAmenities(Set<Amenity> amenities) {
             this.amenities = amenities;
-            return this;
-        }
-        public Builder setPayments(List<Payment> payments) {
-            this.payments = payments;
             return this;
         }
 
@@ -141,7 +139,6 @@ public class Booking {
             this.totalPrice = booking.totalPrice;
             this.guest = booking.guest;
             this.amenities = booking.amenities;
-            this.payments = booking.payments;
             return this;
 
         }

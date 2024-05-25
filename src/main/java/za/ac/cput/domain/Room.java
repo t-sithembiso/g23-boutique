@@ -1,9 +1,6 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Locale;
@@ -13,12 +10,15 @@ import java.util.Objects;
 public class Room {
     @Id
     private long roomNumber;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<RoomType> roomType;
+    @ManyToOne
+    @JoinColumn(name = "roomType")
+    private RoomType roomType;
     protected Room() {
 
     }
     private Room(Builder builder){
+        this.roomNumber = builder.roomNumber;
+        this.roomType = builder.roomType;
 
     }
 
@@ -27,7 +27,7 @@ public class Room {
         return roomNumber;
     }
 
-    public List<RoomType> getRoomType() {
+    public RoomType getRoomType() {
         return roomType;
     }
 
@@ -53,14 +53,16 @@ public class Room {
 
     public static class Builder {
         private long roomNumber;
-        private List<RoomType> roomType;
+        private RoomType roomType;
 
-        public void setRoomNumber(long roomNumber) {
+        public Builder setRoomNumber(long roomNumber) {
             this.roomNumber = roomNumber;
+            return this;
         }
 
-        public void setRoomType(List<RoomType> roomType) {
+        public Builder setRoomType(RoomType roomType) {
             this.roomType = roomType;
+            return this;
         }
 
         public Room.Builder copy(Room room){

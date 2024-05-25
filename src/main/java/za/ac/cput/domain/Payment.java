@@ -13,8 +13,8 @@ public class Payment {
     private String paymentDescription;
     private LocalDate paymentDate;
 
-    @ManyToOne
-    @JoinTable(name = "booking_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "Paid")
     private Booking booking;
 
     protected Payment(){
@@ -73,13 +73,12 @@ public class Payment {
                 '}';
     }
 
-    public class Builder{
+    public static class Builder{
         private Long paymentId;
         private double totalAmount;
         private String paymentDescription;
         private LocalDate paymentDate;
         private Booking booking;
-        private Booking Booking;
 
         public Builder setPaymentId(Long paymentId) {
             this.paymentId = paymentId;
@@ -101,7 +100,7 @@ public class Payment {
             return this;
         }
 
-        public Builder setContact(Booking booking) {
+        public Builder setBooking(Booking booking) {
             this.booking = booking;
             return this;
         }
@@ -111,8 +110,12 @@ public class Payment {
             this.totalAmount = payment.totalAmount;
             this.paymentDescription = payment.paymentDescription;
             this.paymentDate = payment.paymentDate;
-            this.Booking = payment.booking;
+            this.booking = payment.booking;
             return this;
+        }
+
+        public Payment build(){
+            return new Payment(this);
         }
     }
 }

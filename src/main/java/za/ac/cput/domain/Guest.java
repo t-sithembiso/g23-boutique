@@ -1,9 +1,6 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +12,7 @@ public class Guest {
     private String guestEmail;
     private String guestMobile;
 
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Booking> bookings;
 
     protected Guest(){
@@ -46,20 +43,16 @@ public class Guest {
         return guestMobile;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Guest guest)) return false;
-        return getGuestId() == guest.getGuestId() && Objects.equals(getGuestFullName(), guest.getGuestFullName()) && Objects.equals(getGuestEmail(), guest.getGuestEmail()) && Objects.equals(getGuestMobile(), guest.getGuestMobile()) && Objects.equals(getBookings(), guest.getBookings());
+        return getGuestId() == guest.getGuestId() && Objects.equals(getGuestFullName(), guest.getGuestFullName()) && Objects.equals(getGuestEmail(), guest.getGuestEmail()) && Objects.equals(getGuestMobile(), guest.getGuestMobile());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getGuestId(), getGuestFullName(), getGuestEmail(), getGuestMobile(), getBookings());
+        return Objects.hash(getGuestId(), getGuestFullName(), getGuestEmail(), getGuestMobile());
     }
 
     @Override
@@ -69,16 +62,14 @@ public class Guest {
                 ", guestFullName='" + guestFullName + '\'' +
                 ", guestEmail='" + guestEmail + '\'' +
                 ", guestMobile='" + guestMobile + '\'' +
-                ", bookings=" + bookings +
                 '}';
     }
 
-    public class Builder{
+    public static class Builder{
         private long guestId;
         private String guestFullName;
         private String guestEmail;
         private String guestMobile;
-        private List<Booking> bookings;
 
         public Builder setGuestId(long guestId) {
             this.guestId = guestId;
@@ -100,10 +91,6 @@ public class Guest {
             return this;
         }
 
-        public Builder setBookings(List<Booking> bookings) {
-            this.bookings = bookings;
-            return this;
-        }
 
         public Guest.Builder copy(Guest guest){
             this.guestId = guest.guestId;
