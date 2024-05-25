@@ -6,6 +6,6 @@ import za.ac.cput.domain.Receptionist;
 
 
 @Repository
-public interface ReceptionistRepository extends JpaRepository<Receptionist, Integer> {
+public interface ReceptionistRepository extends JpaRepository<Receptionist, Long> {
 
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Inventory;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
-    Inventory findEmployeeBaseByEmployeeId(String employeeId);
+
 }

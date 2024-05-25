@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class ManagerFactory {
 
-    public static Manager createManager(int managerId, String username, String password, Set<Staff> staff) {
+    public static Manager createManager(int managerId, String username, String password, Staff staff) {
         return new Manager.Builder()
                 .setManagerId(managerId)
                 .setUsername(username)

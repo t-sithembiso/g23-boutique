@@ -3,29 +3,41 @@ package za.ac.cput.factory;
 import za.ac.cput.domain.Amenity;
 import za.ac.cput.domain.Booking;
 import za.ac.cput.domain.Guest;
-import za.ac.cput.domain.Payment;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class BookingFactory {
-    public static Booking buildBooking(long booking, LocalDate checkIn, LocalDate checkOut, double totalPrice, Guest guest, Amenity amenity, Payment payment){
-        if(booking <0
+    public static Booking buildBookingP(long bookingId, LocalDate checkIn, LocalDate checkOut, double totalPrice, Guest guest, Set<Amenity> amenities){
+        if(bookingId <0
             || checkIn ==null
             || checkOut == null
             || totalPrice <0
             || guest == null
-            || amenity == null
-            || payment == null)
+            || amenities == null)
             return null;
         return new Booking.Builder()
-                .setBookingId(booking)
+                .setBookingId(bookingId)
                 .setCheckIn(checkIn)
                 .setCheckOut(checkOut)
                 .setGuest(guest)
-                .setAmenities((List<Amenity>) amenity)
-                .setPayments((List<Payment>) payment)
+                .setAmenities(amenities)
+                .build();
+    }
+    public static Booking buildBooking(long bookingId, LocalDate checkIn, LocalDate checkOut, double totalPrice, Guest guest, Set<Amenity> amenities1){
+        if(bookingId <0
+                || checkIn ==null
+                || checkOut == null
+                || totalPrice <0
+                || guest == null)
+            return null;
+        return new Booking.Builder()
+                .setBookingId(bookingId)
+                .setCheckIn(checkIn)
+                .setCheckOut(checkOut)
+                .setTotalPrice(totalPrice)
+                .setGuest(guest)
+                .setAmenities(amenities1)
                 .build();
     }
 }

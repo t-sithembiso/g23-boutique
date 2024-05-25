@@ -1,15 +1,19 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
-
+@Entity
 public class Cost {
-
-    private String costId;
+    @Id
+    private long costId;
     private String inventoryId;
     private String costDescription;
-    private Double amount;
-    private Date dateIncurred;
+    private double amount;
+    private LocalDate dateIncurred;
 
 
     public Cost() {
@@ -23,7 +27,7 @@ public class Cost {
         this.dateIncurred = builder.dateIncurred;
     }
 
-    public String getCostId() {
+    public long getCostId() {
         return costId;
     }
 
@@ -35,11 +39,11 @@ public class Cost {
         return costDescription;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public Date getDateIncurred() {
+    public LocalDate getDateIncurred() {
         return dateIncurred;
     }
 
@@ -68,13 +72,13 @@ public class Cost {
     }
 
     public static class Builder {
-        private String costId;
+        private long costId;
         private String inventoryId;
         private String costDescription;
-        private Double amount;
-        private Date dateIncurred;
+        private double amount;
+        private LocalDate dateIncurred;
 
-        public Builder setCostId(String costId) {
+        public Builder setCostId(long costId) {
             this.costId = costId;
             return this;
         }
@@ -89,12 +93,12 @@ public class Cost {
             return this;
         }
 
-        public Builder setAmount(Double amount) {
+        public Builder setAmount(double amount) {
             this.amount = amount;
             return this;
         }
 
-        public Builder setDateIncurred(Date dateIncurred) {
+        public Builder setDateIncurred(LocalDate dateIncurred) {
             this.dateIncurred = dateIncurred;
             return this;
         }

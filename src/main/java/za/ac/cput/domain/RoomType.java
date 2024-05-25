@@ -1,35 +1,57 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
-
 @Entity
-public class RoomType extends Room{
+public class RoomType{
     @Id
-    private Long roomTypeId;
+    private long roomTypeId;
     private String roomDescription;
-    private Integer numberOfBeds;
-    private Double pricePerNight;
-    public RoomType(){
-        super();
+    private int numberOfBeds;
+    private double pricePerNight;
+    @OneToMany(mappedBy = "roomType", cascade = CascadeType.ALL)
+    private List<Room> room;
 
+
+    protected RoomType() {
     }
 
+    private RoomType(Builder builder) {
+        this.roomTypeId = builder.roomTypeId;
+        this.roomDescription = builder.roomDescription;
+        this.numberOfBeds = builder.numberOfBeds;
+        this.pricePerNight = builder.pricePerNight;
+    }
+
+    public long getRoomTypeId() {
+        return roomTypeId;
+    }
+
+    public String getRoomDescription() {
+        return roomDescription;
+    }
+
+    public int getNumberOfBeds() {
+        return numberOfBeds;
+    }
+
+    public double getPricePerNight() {
+        return pricePerNight;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        RoomType roomType = (RoomType) o;
-        return Objects.equals(roomTypeId, roomType.roomTypeId) && Objects.equals(roomDescription, roomType.roomDescription) && Objects.equals(numberOfBeds, roomType.numberOfBeds) && Objects.equals(pricePerNight, roomType.pricePerNight);
+        if (!(o instanceof RoomType roomType)) return false;
+        return getRoomTypeId() == roomType.getRoomTypeId() && Objects.equals(getRoomDescription(), roomType.getRoomDescription()) && Objects.equals(getNumberOfBeds(), roomType.getNumberOfBeds()) && Objects.equals(getPricePerNight(), roomType.getPricePerNight());
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), roomTypeId, roomDescription, numberOfBeds, pricePerNight);
+        return Objects.hash(getRoomTypeId(), getRoomDescription(), getNumberOfBeds(), getPricePerNight());
     }
 
     @Override
@@ -39,31 +61,17 @@ public class RoomType extends Room{
                 ", roomDescription='" + roomDescription + '\'' +
                 ", numberOfBeds=" + numberOfBeds +
                 ", pricePerNight=" + pricePerNight +
-                ", roomNumber=" + roomNumber +
-                ", name='" + name + '\'' +
                 '}';
     }
 
     public static class Builder {
-        private Integer roomNumber;
-        private Long roomTypeId;
-        private String name;
+        private long roomTypeId;
         private String roomDescription;
-        private Integer numberOfBeds;
-        private Double pricePerNight;
+        private int numberOfBeds;
+        private double pricePerNight;
 
-        public Builder setRoomNumber(Integer roomNumber) {
-            this.roomNumber = roomNumber;
-            return this;
-        }
-
-        public Builder setRoomTypeId(Long roomTypeId) {
+        public Builder setRoomTypeId(long roomTypeId) {
             this.roomTypeId = roomTypeId;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            this.name = name;
             return this;
         }
 
@@ -72,27 +80,26 @@ public class RoomType extends Room{
             return this;
         }
 
-        public Builder setNumberOfBeds(Integer numberOfBeds) {
+        public Builder setNumberOfBeds(int numberOfBeds) {
             this.numberOfBeds = numberOfBeds;
             return this;
         }
-        public Builder setpricePerNight(Double pricePerNight) {
-            return this;
 
+        public Builder setPricePerNight(double pricePerNight) {
+            this.pricePerNight = pricePerNight;
+            return this;
         }
+
         public Builder Copy(RoomType roomType){
-            this.roomNumber= roomType.roomNumber;
             this.roomTypeId = roomType.roomTypeId;
-            this.name = roomType.name;
             this.roomDescription = roomType.roomDescription;
             this.numberOfBeds = roomType.numberOfBeds;
             this.pricePerNight = roomType.pricePerNight;
             return this;
         }
         public RoomType build(){
-            return new RoomType();
+            return new RoomType(this);
         }
-
 
     }
 }

@@ -1,34 +1,32 @@
 //https://github.com/sitgi/g23-boutique
 package za.ac.cput.domain;
 
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.Set;
-
+@Entity
 public class Staff{
     @Id
     private long staffNumber;
     private long nationalId;
     private String staffName;
     private String staffSurname;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name ="email")
+    private Contact contact;
 
-    private Set<Contact> contact;
-    private Receptionist receptionist;
-    private Manager manager;
-
-    public Staff() {
+    protected Staff() {
     }
 
-    public Staff(Builder builder) {
+    private Staff(Builder builder) {
         this.staffNumber = builder.staffNumber;
         this.nationalId = builder.nationalId;
         this.staffName = builder.staffName;
         this.staffSurname =builder.staffSurname;
         this.contact = builder.contact;
-        this.receptionist =builder.receptionist;
-        this.manager = builder.manager;
     }
+
 
     public long getStaffNumber() {
         return staffNumber;
@@ -46,29 +44,20 @@ public class Staff{
         return staffSurname;
     }
 
-    public Set<Contact> getContact() {
+    public Contact getContact() {
         return contact;
-    }
-
-    public Receptionist getReceptionist() {
-        return receptionist;
-    }
-
-    public Manager getManager() {
-        return manager;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Staff staff = (Staff) o;
-        return staffNumber == staff.staffNumber && nationalId == staff.nationalId && Objects.equals(staffName, staff.staffName) && Objects.equals(staffSurname, staff.staffSurname) && Objects.equals(contact, staff.contact) && Objects.equals(receptionist, staff.receptionist) && Objects.equals(manager, staff.manager);
+        if (!(o instanceof Staff staff)) return false;
+        return getStaffNumber() == staff.getStaffNumber() && getNationalId() == staff.getNationalId() && Objects.equals(getStaffName(), staff.getStaffName()) && Objects.equals(getStaffSurname(), staff.getStaffSurname()) && Objects.equals(getContact(), staff.getContact());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(staffNumber, nationalId, staffName, staffSurname, contact, receptionist, manager);
+        return Objects.hash(getStaffNumber(), getNationalId(), getStaffName(), getStaffSurname(), getContact());
     }
 
     @Override
@@ -79,19 +68,16 @@ public class Staff{
                 ", staffName='" + staffName + '\'' +
                 ", staffSurname='" + staffSurname + '\'' +
                 ", contact=" + contact +
-                ", receptionist=" + receptionist +
-                ", manager=" + manager +
                 '}';
     }
+
     public static class Builder{
         private int staffNumber;
         private int nationalId;
         private String staffName;
         private String staffSurname;
 
-        private Set<Contact> contact;
-        private Receptionist receptionist;
-        private Manager manager;
+        private Contact contact;
 
         public Builder setStaffNumber(int staffNumber) {
             this.staffNumber = staffNumber;
@@ -113,28 +99,18 @@ public class Staff{
             return this;
         }
 
-        public Builder setContact(Set<Contact> contact) {
+        public Builder setContact(Contact contact) {
             this.contact = contact;
             return this;
         }
 
-        public Builder setReceptionist(Receptionist receptionist) {
-            this.receptionist = receptionist;
-            return this;
-        }
 
-        public Builder setManager(Manager manager) {
-            this.manager = manager;
-            return this;
-        }
         public Builder copy(Builder builder){
             this.staffNumber = builder.staffNumber;
             this.nationalId = builder.nationalId;
             this.staffName = builder.staffName;
             this.staffSurname =builder.staffSurname;
             this.contact = builder.contact;
-            this.receptionist =builder.receptionist;
-            this.manager = builder.manager;
             return this;
 
         }

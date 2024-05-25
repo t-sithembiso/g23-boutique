@@ -1,9 +1,6 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,8 +12,8 @@ public class Guest {
     private String guestEmail;
     private String guestMobile;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private List<Booking> employees;
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Booking> bookings;
 
     protected Guest(){
 
@@ -27,6 +24,7 @@ public class Guest {
         this.guestFullName = builder.guestFullName;
         this.guestEmail = builder.guestEmail;
         this.guestMobile = builder.guestMobile;
+
     }
 
     public long getGuestId() {
@@ -67,7 +65,7 @@ public class Guest {
                 '}';
     }
 
-    public class Builder{
+    public static class Builder{
         private long guestId;
         private String guestFullName;
         private String guestEmail;
@@ -92,6 +90,7 @@ public class Guest {
             this.guestMobile = guestMobile;
             return this;
         }
+
 
         public Guest.Builder copy(Guest guest){
             this.guestId = guest.guestId;
