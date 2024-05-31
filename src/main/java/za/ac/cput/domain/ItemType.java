@@ -18,6 +18,10 @@ public class ItemType {
 
     private String supplierName;
 
+    @ManyToOne
+    @JoinColumn(name = "inventory_id")
+    private Inventory inventory;
+
     protected ItemType() {}
 
     private ItemType(Builder builder) {
@@ -27,16 +31,14 @@ public class ItemType {
         this.category = builder.category;
         this.cost = builder.cost;
         this.supplierName = builder.supplierName;
+        this.inventory = builder.inventory;
     }
 
     public long getItemTypeId() {
         return itemTypeId;
     }
 
-    public String getItemName() {
-
-        return itemName;
-    }
+    public String getItemName() {return itemName;}
 
     public String getCategory() {
         return category;
@@ -52,39 +54,32 @@ public class ItemType {
         return supplierName;
     }
 
+    public Inventory getInventory() { return inventory;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemType itemType = (ItemType) o;
-
-        return itemTypeId == itemType.itemTypeId && cost == itemType.cost &&
-                Objects.equals(itemName, itemType.itemName) &&
-                Objects.equals(category, itemType.category) &&
-                Objects.equals(supplierName, itemType.supplierName);
-
+        return itemTypeId == itemType.itemTypeId && cost == itemType.cost && Objects.equals(itemName, itemType.itemName) && Objects.equals(category, itemType.category) && Objects.equals(supplierName, itemType.supplierName) && Objects.equals(inventory, itemType.inventory);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(itemTypeId, itemName, category, cost, supplierName);
-
+        return Objects.hash(itemTypeId, itemName, category, cost, supplierName, inventory);
     }
 
     @Override
     public String toString() {
         return "ItemType{" +
-
-                "itemTypeId='" + itemTypeId + '\'' +
-
+                "itemTypeId=" + itemTypeId +
                 ", itemName='" + itemName + '\'' +
                 ", category='" + category + '\'' +
                 ", cost=" + cost +
                 ", supplierName='" + supplierName + '\'' +
+                ", inventory=" + inventory +
                 '}';
     }
-
 
     public static class Builder {
 
@@ -93,7 +88,7 @@ public class ItemType {
         private String category;
         private int cost;
         private String supplierName;
-
+        private Inventory inventory;
 
         public Builder setItemTypeId(long itemTypeId) {
             this.itemTypeId = itemTypeId;
@@ -120,6 +115,11 @@ public class ItemType {
             return this;
         }
 
+        public Builder setInventory(Inventory inventory) {
+            this.inventory = inventory;
+            return this;
+        }
+
         public Builder copy(ItemType itemType) {
 
             this.itemTypeId = itemType.itemTypeId;
@@ -127,6 +127,7 @@ public class ItemType {
             this.category = itemType.category;
             this.cost = itemType.cost;
             this.supplierName = itemType.supplierName;
+            this.inventory = itemType.inventory;
             return this;
         }
 

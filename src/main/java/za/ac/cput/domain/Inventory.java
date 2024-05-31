@@ -11,10 +11,9 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long inventoryId;
 
-    @Column(nullable = false)
     private int quantity;
 
-    @OneToMany
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<ItemType> itemTypes;
 
     protected Inventory() {}
@@ -64,7 +63,6 @@ public class Inventory {
         return "Inventory{" +
                 "inventoryId=" + inventoryId +
                 ", quantity=" + quantity +
-
                 ", itemTypes=" + itemTypes +
                 '}';
     }
