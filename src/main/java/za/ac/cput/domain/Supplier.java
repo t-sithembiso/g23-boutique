@@ -1,9 +1,8 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Supplier {
@@ -14,6 +13,8 @@ public class Supplier {
     private String contactNumber;
     private String email;
     private String address;
+    @ManyToMany(mappedBy = "itemType", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<ItemType> itemTypeSet = new HashSet<>();
     protected Supplier(){}
        private Supplier (Builder builder){
 

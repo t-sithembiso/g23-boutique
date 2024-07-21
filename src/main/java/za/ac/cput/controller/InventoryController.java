@@ -14,12 +14,12 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-    /*@Transactional
-    @PostMapping("/create")
-    public Inventory create(@RequestBody Inventory inventory) {
-        return InventoryService.create(inventory);
-    }
-*/
+//    @Transactional
+//    @PostMapping("/create")
+//    public Inventory create(@RequestBody Inventory inventory) {
+//        return InventoryService.create(inventory);
+//    }
+
     @Transactional
     @PostMapping("/update")
     public Inventory update(@RequestBody Inventory inventory) {

@@ -9,7 +9,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.Booking;
 import za.ac.cput.domain.ItemType;
+import za.ac.cput.domain.Supplier;
 import za.ac.cput.factory.ItemTypeFactory;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -21,7 +25,14 @@ class ItemTypeControllerTest {
     private final String Base_Url = "http://localhost:8080/boutique/itemtype/";
     private static ItemType itemType;
     public static void setup() {
-        itemType = ItemTypeFactory.buildItemType(23L,"Soap","bathroom",25,"Unliver");
+        Set<Supplier> suppliers = new HashSet<>();
+        Supplier supplier = new Supplier.Builder().setSupplierId(111235987L).setContactNumber("0123456789")
+                .setAddress("123 Sirlowry Woodstock east")
+                .setContactPerson("Jerry")
+                .setName("Jeff")
+                .setEmail("jerry@gmail.com").build();
+        suppliers.add(supplier);
+        itemType = ItemTypeFactory.buildItemType(23L,"Soap","bathroom",25,suppliers);
     }
     @Test
     void a_create() {

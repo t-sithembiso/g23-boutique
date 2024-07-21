@@ -1,7 +1,10 @@
 package za.ac.cput.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import za.ac.cput.domain.Inventory;
 import za.ac.cput.domain.ItemType;
+import za.ac.cput.domain.Supplier;
 import za.ac.cput.factory.InventoryFactory;
 import za.ac.cput.factory.ItemTypeFactory;
 
@@ -26,10 +30,16 @@ class InventoryServiceTest {
 
     @BeforeAll
     static void setup() {
-        ItemType itemType = ItemTypeFactory.buildItemType(1L, "Pencil", "Stationary", 12, "Unilever");
-        List<ItemType> itemTypes = new ArrayList();
-        itemTypes.add(itemType);
-        inventory = InventoryFactory.buildInventory(111235987L, 10, itemTypes);
+        Set<Supplier> suppliers = new HashSet<>();
+        Supplier supplier = new Supplier.Builder().setSupplierId(111235987L).setContactNumber("0123456789")
+                .setAddress("123 Sirlowry Woodstock east")
+                .setContactPerson("Jerry")
+                .setName("Jeff")
+                .setEmail("jerry@gmail.com").build();
+        suppliers.add(supplier);
+        ItemType itemType = ItemTypeFactory.buildItemType(1L, "Pencil", "Stationary", 12, suppliers);
+
+        inventory = InventoryFactory.buildInventory(111235987L, 10, itemType);
         Assertions.assertNotNull(inventory);
         System.out.println(inventory.toString());
     }
