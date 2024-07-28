@@ -20,7 +20,7 @@
                  .setItemName(itemName)
                  .setCategory(category)
                  .setCost(cost)
-                 .setSupplierName(supplierName)
+                 .setSuppliers(supplierName)
                  .build();
      }
  }

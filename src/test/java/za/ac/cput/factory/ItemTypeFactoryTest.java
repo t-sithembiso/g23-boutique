@@ -22,7 +22,7 @@ class ItemTypeFactoryTest {
                 .setName("Jeff")
                 .setEmail("jerry@gmail.com").build();
         suppliers.add(supplier);
-        ItemType itemType = ItemTypeFactory.buildItemType(123, "Spoon","the",24,suppliers);
+        ItemType itemType = ItemTypeFactory.buildItemType(123L, "Spoon","the",24,suppliers);
         assertNotNull(itemType);
         System.out.println(itemType.toString());
     }

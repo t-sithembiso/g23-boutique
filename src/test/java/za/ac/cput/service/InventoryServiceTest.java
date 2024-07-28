@@ -37,7 +37,7 @@ class InventoryServiceTest {
                 .setName("Jeff")
                 .setEmail("jerry@gmail.com").build();
         suppliers.add(supplier);
-        ItemType itemType = ItemTypeFactory.buildItemType(1L, "Pencil", "Stationary", 12, suppliers);
+        ItemType itemType = ItemTypeFactory.buildItemType(6L, "Pen", "Stationary", 12, suppliers);
 
         inventory = InventoryFactory.buildInventory(111235987L, 10, itemType);
         Assertions.assertNotNull(inventory);

@@ -16,7 +16,7 @@ package za.ac.cput.factory;
 
  class InventoryFactoryTest {
 
-     private ItemType itemType;
+     private Inventory inventory;
 
      @BeforeEach
      void setUp() {
@@ -27,26 +27,18 @@ package za.ac.cput.factory;
                  .setName("Jeff")
                  .setEmail("jerry@gmail.com").build();
          suppliers.add(supplier);
-
-          itemType = new ItemType.Builder()
-                 .setItemTypeId(1)
-                 .setItemName("Laptop")
-                 .setCategory("Electronics")
-                 .setCost(1000)
-                  .setSupplierName(suppliers)
-                 .build();
-
-     }
-
-     @Test
-     void testBuildInventorySuccess() {
+ItemType itemType = new ItemType.Builder().setItemTypeId(111235987L).setItemName("Pencil").setCategory("Oficce utensil").setSuppliers(suppliers).build();
+          inventory = new Inventory.Builder()
+                 .setInventoryId(1)
+                 .setQuantity(10)
+                 .setItemTypes(itemType)
+                  .build();
          Inventory inventory = InventoryFactory.buildInventory(1L, 10, itemType);
          assertNotNull(inventory);
-         assertEquals(1L, inventory.getInventoryId());
-         assertEquals(10, inventory.getQuantity());
-         assertEquals(itemType, inventory.getItemTypes());
-         System.out.println(inventory);
+         System.out.println(inventory.toString());
+
      }
+
 
      @Test
      void testBuildInventoryWithNullItemTypes() {

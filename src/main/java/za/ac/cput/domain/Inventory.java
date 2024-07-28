@@ -1,10 +1,7 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Inventory {
@@ -14,7 +11,7 @@ public class Inventory {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "itemTypes_id")
+    @JoinColumn(name = "itemType_id")
     private ItemType itemTypes;
 
     protected Inventory() {}
@@ -25,47 +22,30 @@ public class Inventory {
         this.itemTypes = builder.itemTypes;
     }
 
-
-    public Long getInventoryId() {
+    public long getInventoryId() {
         return inventoryId;
     }
-
 
     public int getQuantity() {
         return quantity;
     }
 
-
     public ItemType getItemTypes() {
         return itemTypes;
-
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Inventory inventory = (Inventory) o;
-        return inventoryId == inventory.inventoryId; // Assuming inventoryId is unique and sufficient for equality
+        return inventoryId == inventory.inventoryId;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(inventoryId);
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Inventory inventory = (Inventory) o;
-//        return inventoryId == inventory.inventoryId && quantity == inventory.quantity &&
-//                Objects.equals(itemTypes, inventory.itemTypes);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(inventoryId, quantity, itemTypes);
-//    }
 
     @Override
     public String toString() {
@@ -81,7 +61,6 @@ public class Inventory {
         private int quantity;
         private ItemType itemTypes;
 
-
         public Builder setInventoryId(long inventoryId) {
             this.inventoryId = inventoryId;
             return this;
@@ -91,7 +70,6 @@ public class Inventory {
             this.quantity = quantity;
             return this;
         }
-
 
         public Builder setItemTypes(ItemType itemTypes) {
             this.itemTypes = itemTypes;
@@ -108,6 +86,5 @@ public class Inventory {
         public Inventory build() {
             return new Inventory(this);
         }
-
     }
 }
