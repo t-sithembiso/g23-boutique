@@ -2,6 +2,7 @@ package za.ac.cput.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Inventory;
 import za.ac.cput.service.InventoryService;
@@ -14,23 +15,27 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-//    @Transactional
-//    @PostMapping("/create")
-//    public Inventory create(@RequestBody Inventory inventory) {
-//        return InventoryService.create(inventory);
-//    }
+    @Transactional
+    @PostMapping("/create")
+    public ResponseEntity<Inventory> create(@RequestBody Inventory inventory) {
+        Inventory createdInventory = inventoryService.create(inventory);
+        return ResponseEntity.ok(createdInventory);
+    }
 
     @Transactional
     @PostMapping("/update")
-    public Inventory update(@RequestBody Inventory inventory) {
-        return inventoryService.update(inventory);
+    public ResponseEntity<Inventory> update(@RequestBody Inventory inventory) {
+        Inventory updatedInventory = inventoryService.update(inventory);
+        return ResponseEntity.ok(updatedInventory);
     }
 
     @Transactional(readOnly = true)
     @GetMapping("/read/{inventoryId}")
-    public Inventory read(@PathVariable Long inventoryId) {
-        return inventoryService.read(inventoryId);
+    public ResponseEntity<Inventory> read(@PathVariable Long inventoryId) {
+        Inventory inventory = inventoryService.read(inventoryId);
+        return ResponseEntity.ok(inventory);
     }
+
 
     @Transactional(readOnly = true)
     @GetMapping("/getall")
