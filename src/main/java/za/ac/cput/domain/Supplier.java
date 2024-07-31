@@ -1,31 +1,33 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Supplier {
-@Id
+    @Id
     private Long supplierId;
     private String name;
     private String contactPerson;
     private String contactNumber;
     private String email;
     private String address;
-    protected Supplier(){}
-       private Supplier (Builder builder){
 
-        this.supplierId=builder.supplierId;
-        this.name=builder.name;
-        this.contactNumber=builder.contactNumber;
-        this.contactPerson=builder.contactPerson;
-        this.email=builder.email;
-        this.address=builder.address;
+    @ManyToMany(mappedBy = "suppliers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ItemType> itemTypeSet = new HashSet<>();
 
+    protected Supplier() {}
+
+    private Supplier(Builder builder) {
+        this.supplierId = builder.supplierId;
+        this.name = builder.name;
+        this.contactPerson = builder.contactPerson;
+        this.contactNumber = builder.contactNumber;
+        this.email = builder.email;
+        this.address = builder.address;
     }
-
 
     public Long getSupplierId() {
         return supplierId;
@@ -54,8 +56,14 @@ public class Supplier {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Supplier supplier)) return false;
-        return supplierId == supplier.supplierId && Objects.equals(name, supplier.name) && Objects.equals(contactPerson, supplier.contactPerson) && Objects.equals(contactNumber, supplier.contactNumber) && Objects.equals(email, supplier.email) && Objects.equals(address, supplier.address);
+        if (!(o instanceof Supplier)) return false;
+        Supplier supplier = (Supplier) o;
+        return Objects.equals(supplierId, supplier.supplierId) &&
+                Objects.equals(name, supplier.name) &&
+                Objects.equals(contactPerson, supplier.contactPerson) &&
+                Objects.equals(contactNumber, supplier.contactNumber) &&
+                Objects.equals(email, supplier.email) &&
+                Objects.equals(address, supplier.address);
     }
 
     @Override
@@ -74,8 +82,8 @@ public class Supplier {
                 ", address='" + address + '\'' +
                 '}';
     }
-    public static class Builder{
 
+    public static class Builder {
         private Long supplierId;
         private String name;
         private String contactPerson;
@@ -90,37 +98,41 @@ public class Supplier {
 
         public Builder setName(String name) {
             this.name = name;
-            return this;        }
+            return this;
+        }
 
         public Builder setContactPerson(String contactPerson) {
             this.contactPerson = contactPerson;
-            return this;}
+            return this;
+        }
 
         public Builder setContactNumber(String contactNumber) {
             this.contactNumber = contactNumber;
-            return this;  }
+            return this;
+        }
 
         public Builder setEmail(String email) {
             this.email = email;
-            return this;  }
+            return this;
+        }
 
         public Builder setAddress(String address) {
             this.address = address;
-            return this; }
-
-        public Builder copy(Supplier supplier){
-
-            this.supplierId=supplier.supplierId;
-            this.name=supplier.name;
-            this.contactNumber=supplier.contactNumber;
-            this.contactPerson=supplier.contactPerson;
-            this.email=supplier.email;
-            this.address=supplier.address;
             return this;
         }
-        public Supplier build(){
-            return new Supplier(this);
+
+        public Builder copy(Supplier supplier) {
+            this.supplierId = supplier.supplierId;
+            this.name = supplier.name;
+            this.contactPerson = supplier.contactPerson;
+            this.contactNumber = supplier.contactNumber;
+            this.email = supplier.email;
+            this.address = supplier.address;
+            return this;
         }
 
+        public Supplier build() {
+            return new Supplier(this);
         }
+    }
 }

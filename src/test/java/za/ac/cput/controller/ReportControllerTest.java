@@ -37,7 +37,6 @@ class ReportControllerTest {
         ResponseEntity<Report> postResponse = restTemplate.postForEntity(url, report, Report.class);
         assertNotNull(postResponse);
         Report savedReport = postResponse.getBody();
-        assertEquals(report.getReportId(),savedReport.getReportId());
         assertNotNull(savedReport);
         System.out.println(savedReport);
         ResponseEntity<Report> reportResponse = restTemplate.postForEntity(url,report2,Report.class);

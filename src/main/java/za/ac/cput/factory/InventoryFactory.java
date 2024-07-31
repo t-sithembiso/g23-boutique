@@ -5,12 +5,13 @@ import za.ac.cput.domain.ItemType;
 import za.ac.cput.util.Helper;
 
 import java.util.List;
+import java.util.Set;
 
 public class InventoryFactory {
 
-    public static Inventory buildInventory(Long inventoryId, int quantity, List<ItemType> itemTypes) {
-        if (Helper.isNullorEmpty(String.valueOf(inventoryId)) || Helper.isNullorEmpty(String.valueOf(quantity)) ||
-                itemTypes == null || itemTypes.isEmpty())
+    public static Inventory buildInventory(long inventoryId, int quantity, ItemType itemTypes) {
+        if (inventoryId <=0 || quantity <= 0 ||
+                itemTypes == null)
             return null;
 
         return new Inventory.Builder()

@@ -1,8 +1,8 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
-
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class ItemType {
@@ -16,17 +16,20 @@ public class ItemType {
 
     private int cost;
 
-    private String supplierName;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Supplier> suppliers;
+
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Inventory> inventory;
 
     protected ItemType() {}
 
     private ItemType(Builder builder) {
-
         this.itemTypeId = builder.itemTypeId;
         this.itemName = builder.itemName;
         this.category = builder.category;
         this.cost = builder.cost;
-        this.supplierName = builder.supplierName;
+        this.suppliers = builder.suppliers;
     }
 
     public long getItemTypeId() {
@@ -34,7 +37,6 @@ public class ItemType {
     }
 
     public String getItemName() {
-
         return itemName;
     }
 
@@ -42,14 +44,16 @@ public class ItemType {
         return category;
     }
 
-
     public int getCost() {
         return cost;
     }
 
+    public Set<Supplier> getSuppliers() {
+        return suppliers;
+    }
 
-    public String getSupplierName() {
-        return supplierName;
+    public Set<Inventory> getInventory() {
+        return inventory;
     }
 
     @Override
@@ -57,43 +61,37 @@ public class ItemType {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemType itemType = (ItemType) o;
-
-        return itemTypeId == itemType.itemTypeId && cost == itemType.cost &&
+        return itemTypeId == itemType.itemTypeId &&
+                cost == itemType.cost &&
                 Objects.equals(itemName, itemType.itemName) &&
                 Objects.equals(category, itemType.category) &&
-                Objects.equals(supplierName, itemType.supplierName);
-
+                Objects.equals(suppliers, itemType.suppliers) &&
+                Objects.equals(inventory, itemType.inventory);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(itemTypeId, itemName, category, cost, supplierName);
-
+        return Objects.hash(itemTypeId, itemName, category, cost, suppliers, inventory);
     }
 
     @Override
     public String toString() {
-        return "ItemType{" +
-
-                "itemTypeId='" + itemTypeId + '\'' +
-
+            return "ItemType{" +
+                "itemTypeId=" + itemTypeId +
                 ", itemName='" + itemName + '\'' +
                 ", category='" + category + '\'' +
                 ", cost=" + cost +
-                ", supplierName='" + supplierName + '\'' +
+                ", suppliers=" + suppliers +
+                ", inventory=" + inventory +
                 '}';
     }
 
-
     public static class Builder {
-
         private long itemTypeId;
         private String itemName;
         private String category;
         private int cost;
-        private String supplierName;
-
+        private Set<Supplier> suppliers;
 
         public Builder setItemTypeId(long itemTypeId) {
             this.itemTypeId = itemTypeId;
@@ -115,18 +113,17 @@ public class ItemType {
             return this;
         }
 
-        public Builder setSupplierName(String supplierName) {
-            this.supplierName = supplierName;
+        public Builder setSuppliers(Set<Supplier> suppliers) {
+            this.suppliers = suppliers;
             return this;
         }
 
         public Builder copy(ItemType itemType) {
-
             this.itemTypeId = itemType.itemTypeId;
             this.itemName = itemType.itemName;
             this.category = itemType.category;
             this.cost = itemType.cost;
-            this.supplierName = itemType.supplierName;
+            this.suppliers = itemType.suppliers;
             return this;
         }
 
